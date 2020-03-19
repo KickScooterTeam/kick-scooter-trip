@@ -2,6 +2,7 @@ package com.softserve.kickscootertrip.model.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,8 +11,8 @@ public class TripDto {
     private UUID tripId;
     private UUID userId;
     private UUID scooterId;
-    private Date start;
-    private Date finish;
+    private LocalDateTime start;
+    private LocalDateTime finish;
     private long tripTime;
     private double distance;
     private int tripsNumber;

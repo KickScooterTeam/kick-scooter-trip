@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -22,5 +23,5 @@ List<TripEntity> findByUserId(UUID id);
 
     @Modifying
     @Query(value = "update trip t set t.finish =?1, t.trip_time = ?2, t.status = ?3 where t.trip_id = ?4", nativeQuery = true)
-    public TripEntity updateFinishTriptimeStatus(Date finish, Long tripTime, String status, UUID tripId);
+    public TripEntity updateFinishTriptimeStatus(LocalDateTime finish, Long tripTime, String status, UUID tripId);
 }

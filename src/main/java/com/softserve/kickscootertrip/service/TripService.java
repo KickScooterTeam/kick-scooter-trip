@@ -11,6 +11,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -67,7 +69,7 @@ public class TripService {
         TripEntity tripEntity = new TripEntity();
         tripEntity.setUserId(userDto.getUserId());
         tripEntity.setScooterId(userDto.getScooterId());
-        tripEntity.setStart(new Date());
+        tripEntity.setStart(LocalDateTime.now());
         tripEntity.setStatus(userDto.getStatus());
         return tripRepository.save(tripEntity);
     }
@@ -76,8 +78,8 @@ public class TripService {
     public TripEntity saveStopUserInfo(UserDto userDto) {
         UUID userId = userDto.getUserId();
         TripEntity tripEntity = tripRepository.findByUserIdAndStatus(userId, "start");
-        Date finish = new Date();
-        long tripTime = finish.getTime() - tripEntity.getStart().getTime();
+        LocalDateTime finish = LocalDateTime.now();
+        long tripTime = ChronoUnit.SECONDS.between(finish, tripEntity.getStart());
         String status = tripEntity.getStatus();
         UUID tripId = tripEntity.getTripId();
         findUserTrips(userId);

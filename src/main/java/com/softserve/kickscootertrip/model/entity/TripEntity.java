@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -20,9 +21,9 @@ public class TripEntity {
     @Column(name = "scooterId")
     private UUID scooterId;
     @Column(name = "start")
-    private Date start;
+    private LocalDateTime start;
     @Column(name = "finish")
-    private Date finish;
+    private LocalDateTime finish;
     @Column(name = "tripTime")
     private long tripTime;
     @Column(name = "point")
