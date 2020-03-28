@@ -1,27 +1,26 @@
 package com.softserve.kickscootertrip.repository;
 
-import com.softserve.kickscootertrip.model.entity.TripEntity;
-import org.springframework.data.geo.Point;
+import com.softserve.kickscootertrip.dto.TripStatus;
+import com.softserve.kickscootertrip.model.TripEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 public interface TripRepository extends JpaRepository<TripEntity, Long> {
-List<TripEntity> findByUserId(UUID id);
-    public TripEntity findByUserIdAndStatus(UUID userId, String status);
-    public TripEntity findByTripId(UUID tripId);
+    List<TripEntity> findByUserId(UUID id);
 
+    public TripEntity findByScooterIdAndStatus(UUID scooterId, TripStatus tripStatus);
 
-    @Modifying
-    @Query(value = "update trip t set t.point=?1, t.distance = ?2 where t.trip_id = ?3", nativeQuery = true)
-    public TripEntity updatePointDistance(Point point, double distance, UUID tripId);
-
-    @Modifying
-    @Query(value = "update trip t set t.finish =?1, t.trip_time = ?2, t.status = ?3 where t.trip_id = ?4", nativeQuery = true)
-    public TripEntity updateFinishTriptimeStatus(LocalDateTime finish, Long tripTime, String status, UUID tripId);
+//    @Modifying
+//    @Query("update TripEntity t set t.longitude=?1, t.latitude=?2, t.distance=?3 where t.tripId=?4")
+//    public TripEntity updatePointDistance(double longitude, double latitude, double distance, UUID tripId);
+//
+//    @Modifying
+//    @Query("update TripEntity t set t.tripFinishes =?1, t.tripTime = ?2, t.status = ?3 where t.tripId  = ?4")
+//    public TripEntity updateFinishTriptimeStatus(LocalDateTime finish, Duration tripTime, TripStatus tripStatus, UUID tripId);
 }

@@ -1,13 +1,17 @@
-package com.softserve.kickscootertrip.model.entity;
+package com.softserve.kickscootertrip.model;
 
+import com.softserve.kickscootertrip.dto.TripStatus;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.geo.Point;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "trip")
@@ -21,16 +25,15 @@ public class TripEntity {
     @Column(name = "scooterId")
     private UUID scooterId;
     @Column(name = "start")
-    private LocalDateTime start;
+    private Instant tripStarts;
     @Column(name = "finish")
-    private LocalDateTime finish;
+    private Instant tripFinishes;
     @Column(name = "tripTime")
-    private long tripTime;
-    @Column(name = "point")
-    private Point point;
+    private Duration tripTime;
     @Column(name = "distance")
     private double distance;
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TripStatus status;
 
 }
