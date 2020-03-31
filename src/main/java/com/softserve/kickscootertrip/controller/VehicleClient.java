@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @FeignClient(name = "vehicle-client", url = "${vehicle-url}")
 public interface VehicleClient {
+
     @PutMapping(path = "/scooters/status/acquire/{scooterId}")
     String acquireScooter(@PathVariable UUID scooterId);
 

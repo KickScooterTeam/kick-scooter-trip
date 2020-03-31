@@ -35,7 +35,7 @@ public class GeoServise {
         List<GeoRedis> geoRedisTrip = geoRedisRepository.findByScooterId(scooterId);
         Point previousPoint = geoRedisTrip.get(0).getPoint();
         for (GeoRedis geoRedis : geoRedisTrip) {
-            geoRepository.save(conversionService.convert(geoRedis, Geo.class));
+          //  geoRepository.save(conversionService.convert(geoRedis, Geo.class));
 
             distance += betweenTwoPoints(previousPoint, geoRedis.getPoint());
             previousPoint = geoRedis.getPoint();
