@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @FeignClient(name = "payment-client", url = "${payment-url}")
 public interface PaymentClient {
-    @GetMapping(path = "/payment/user-validation")
+    @PostMapping(path = "/payment/user-validation")
     Boolean isUserCanPay(@RequestParam UUID userId);
 
     @PostMapping(path = "/invoices")
