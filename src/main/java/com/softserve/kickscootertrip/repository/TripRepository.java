@@ -15,12 +15,4 @@ public interface TripRepository extends JpaRepository<TripEntity, Long> {
     List<TripEntity> findByUserId(UUID id);
 
     public TripEntity findByScooterIdAndStatus(UUID scooterId, TripStatus tripStatus);
-
-//    @Modifying
-//    @Query("update TripEntity t set t.longitude=?1, t.latitude=?2, t.distance=?3 where t.tripId=?4")
-//    public TripEntity updatePointDistance(double longitude, double latitude, double distance, UUID tripId);
-//
-//    @Modifying
-//    @Query("update TripEntity t set t.tripFinishes =?1, t.tripTime = ?2, t.status = ?3 where t.tripId  = ?4")
-//    public TripEntity updateFinishTriptimeStatus(LocalDateTime finish, Duration tripTime, TripStatus tripStatus, UUID tripId);
 }

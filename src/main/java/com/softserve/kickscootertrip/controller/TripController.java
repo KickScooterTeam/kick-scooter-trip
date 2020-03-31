@@ -31,7 +31,6 @@ public class TripController {
         if (!paymentClient.isUserCanPay(uiDto.getUserId())) {
             return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
         }
-
         vehicleClient.acquireScooter(uiDto.getScooterId());
         return ResponseEntity.ok(tripService.saveStartUserInfo(uiDto).getTripId());
     }

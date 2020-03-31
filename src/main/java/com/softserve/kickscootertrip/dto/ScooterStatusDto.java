@@ -9,7 +9,6 @@ import java.util.UUID;
 public class ScooterStatusDto {
 
     UUID id;
-
     Point gpsPoint;
     Short battery;
 }

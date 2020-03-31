@@ -22,7 +22,7 @@ import java.util.UUID;
 public class TripService {
 
     private final TripRepository tripRepository;
-    private final GeoServise geoServise;
+    private final GeoService geoService;
     private final ConversionService conversionService;
 
     public TripEntity saveStartUserInfo(UIDto UIDto) {
@@ -42,7 +42,7 @@ public class TripService {
         Duration tripTime = Duration.between(tripEntity.getTripStarts(), Instant.now());
         tripEntity.setTripTime(tripTime);
         tripEntity.setStatus(TripStatus.FREE);
-        tripEntity.setDistance(geoServise.calculateDistace(UIDto.getScooterId()));
+        tripEntity.setDistance(geoService.calculateDistance(tripEntity.getTripId()));
         tripRepository.save(tripEntity);
 
         TripDto tripDto = conversionService.convert(tripEntity, TripDto.class);

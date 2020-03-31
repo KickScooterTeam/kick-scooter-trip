@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -15,11 +16,10 @@ import java.util.UUID;
 @Table(name = "geolocation")
 public class Geo{
         @Id
-        @GeneratedValue(generator = "UUID")
-        private UUID id;
-
-//        @ElementCollection(fetch = FetchType.EAGER)
-//        @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-        private UUID scooterId;
-        private Point point;
+        @GeneratedValue
+        private long id;
+        private UUID tripId;
+        private double longitude;
+        private double latitude;
+        private Instant creation;
 }

@@ -7,12 +7,7 @@ import java.util.UUID;
 
 @Data
 public class TripDto {
-    //    private UUID tripId;
     private UUID userId;
-    //    private UUID scooterId;
-//    private Instant tripStarts;
-//    private Instant tripFinishes;
     private Duration duration;
-//    private double distance;
 
 }
