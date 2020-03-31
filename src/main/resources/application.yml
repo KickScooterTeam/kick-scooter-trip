@@ -1,0 +1,46 @@
+kafka:
+  topic:
+    active-scooters: all-scooter-data-topic
+    payment: payment
+    sales: sales
+server:
+  port: 8086
+spring:
+  datasource:
+    password: password
+    platform: postgresql
+    url: jdbc:postgresql://localhost:5432/test
+    username: postgres
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:9092
+      group-id: trip
+      properties:
+        spring:
+          json:
+            type:
+              mapping: raw:com.softserve.kickscootertrip.dto.ScooterStatusDto
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: raw:com.softserve.kickscootertrip.dto.TripDto
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    drop-first: true
+  redis:
+    host: localhost
+    port: 6379
+payment-url: ${PAYMENT_URL}
+vehicle-url: ${VEHICLE_URL}

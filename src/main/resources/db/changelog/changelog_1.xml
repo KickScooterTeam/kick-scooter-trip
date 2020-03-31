@@ -26,15 +26,20 @@
             <column name="trip_id" type="UUID">
                 <constraints nullable="false"/>
             </column>
-            <column name="status" type="VARCHAR(25)"/>
+            <column name="user_id" type="UUID"/>
+            <column name="scooter_id" type="UUID"/>
         </createTable>
     </changeSet>
 
     <changeSet id="create_geolocation_table" author="Oleg">
         <createTable tableName="geolocation">
-            <column name="trip_id" type="UUID"/>
-            <column name="longitude" type="DECIMAL(11,8)"/>
-            <column name="latitude" type="DECIMAL(11,8)"/>
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="scooter_id" type="uuid"/>
+            <column name="point" type="Point"/>
         </createTable>
     </changeSet>
+
+
 </databaseChangeLog>

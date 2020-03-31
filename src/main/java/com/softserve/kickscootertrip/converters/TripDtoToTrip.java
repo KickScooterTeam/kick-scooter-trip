@@ -12,9 +12,6 @@ public class TripDtoToTrip implements Converter<TripDto, TripEntity> {
     public TripEntity convert(TripDto tripDto) {
         TripEntity entity = new TripEntity();
         entity.setUserId(tripDto.getUserId());
-        entity.setScooterId(tripDto.getScooterId());
-        entity.setTripStarts(tripDto.getTripStarts());
-        entity.setTripFinishes(tripDto.getTripFinishes());
         entity.setTripTime(tripDto.getTripTime());
         return entity;
     }

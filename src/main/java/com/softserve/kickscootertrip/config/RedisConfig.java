@@ -1,6 +1,6 @@
 package com.softserve.kickscootertrip.config;
 
-import com.softserve.kickscootertrip.model.Geo;
+import com.softserve.kickscootertrip.model.GeoRedis;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -15,8 +15,8 @@ public class RedisConfig {
         return new JedisConnectionFactory();
     }
     @Bean
-    public RedisTemplate<Long, Geo> redisTemplate() {
-        final RedisTemplate<Long, Geo> template = new RedisTemplate<Long, Geo>();
+    public RedisTemplate<Long, GeoRedis> redisTemplate() {
+        final RedisTemplate<Long, GeoRedis> template = new RedisTemplate<Long, GeoRedis>();
         template.setConnectionFactory(jedisConnectionFactory());
 //        template.setValueSerializer(new GenericToStringSerializer<Geo>(Geo.class));
         return template;

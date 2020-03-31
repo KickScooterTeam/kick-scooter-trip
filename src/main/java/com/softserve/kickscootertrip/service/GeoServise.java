@@ -4,8 +4,11 @@ package com.softserve.kickscootertrip.service;
 import com.softserve.kickscootertrip.dto.Point;
 import com.softserve.kickscootertrip.dto.ScooterStatusDto;
 import com.softserve.kickscootertrip.model.Geo;
+import com.softserve.kickscootertrip.model.GeoRedis;
+import com.softserve.kickscootertrip.repository.GeoRedisRepository;
 import com.softserve.kickscootertrip.repository.GeoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,24 +18,28 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class GeoServise {
+    private final GeoRedisRepository geoRedisRepository;
     private final GeoRepository geoRepository;
+    private final ConversionService conversionService;
 
-    public Geo save(ScooterStatusDto scooterStatusDto) {
-        Geo geo = new Geo();
-        geo.setScooterId(scooterStatusDto.getId());
-        geo.setPoint(scooterStatusDto.getGpsPoint());
-        geoRepository.save(geo);
-        return geo;
+    public GeoRedis save(ScooterStatusDto scooterStatusDto) {
+        GeoRedis geoRedis = new GeoRedis();
+        geoRedis.setScooterId(scooterStatusDto.getId());
+        geoRedis.setPoint(scooterStatusDto.getGpsPoint());
+        geoRedisRepository.save(geoRedis);
+        return geoRedis;
     }
 
     public double calculateDistace(UUID scooterId) {
         double distance = 0;
-        List<Geo> geoTrip = geoRepository.findByScooterId(scooterId);
-        Point previousPoint = geoTrip.get(0).getPoint();
-        for (Geo geo : geoTrip) {
-            distance += betweenTwoPoints(previousPoint, geo.getPoint());
-            previousPoint = geo.getPoint();
-            geoRepository.delete(geo);
+        List<GeoRedis> geoRedisTrip = geoRedisRepository.findByScooterId(scooterId);
+        Point previousPoint = geoRedisTrip.get(0).getPoint();
+        for (GeoRedis geoRedis : geoRedisTrip) {
+            geoRepository.save(conversionService.convert(geoRedis, Geo.class));
+
+            distance += betweenTwoPoints(previousPoint, geoRedis.getPoint());
+            previousPoint = geoRedis.getPoint();
+            geoRedisRepository.delete(geoRedis);
         }
         return distance;
     }

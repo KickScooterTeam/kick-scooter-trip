@@ -1,6 +1,5 @@
 package com.softserve.kickscootertrip.service;
 
-//import com.softserve.kickscootertrip.controller.KafkaController;
 
 import com.softserve.kickscootertrip.controller.KafkaController;
 import com.softserve.kickscootertrip.dto.TripDto;
@@ -17,41 +16,14 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
-//import org.springframework.kafka.annotation.KafkaListener;
 
 @Service
 @RequiredArgsConstructor
 public class TripService {
 
-    private static final double RADIUS_EARTH = 6371008.67;
     private final TripRepository tripRepository;
-    private ConversionService conversionService;
-    private final KafkaController kafkaController;
     private final GeoServise geoServise;
-
-
-    public TripDto sendTripToPayment(TripEntity tripEntity) {
-        TripDto tripDto = conversionService.convert(tripEntity, TripDto.class);
-        kafkaController.toPayment(tripDto);
-        return tripDto;
-    }
-
-//    public TripDto findUserTrips(UUID id) {
-//        TripDto tripDto = new TripDto();
-//        List<TripEntity> tripEntities = tripRepository.findByUserId(id);
-//        if (tripEntities.size() != 0) {
-//            tripDto.setUserId(id);
-//            for (TripEntity tripEntity : tripEntities) {
-////                tripDto.setTripTime(tripDto.getTripTime() + tripEntity.getTripTime());
-//                tripDto.setDistance(tripDto.getDistance() + tripEntity.getDistance());
-//            }
-//            tripDto.setTripsNumber(tripEntities.size());
-//            kafkaController.toSales(tripDto);
-//        }
-//        return tripDto;
-//    }
-
-
+    private final ConversionService conversionService;
 
     public TripEntity saveStartUserInfo(UIDto UIDto) {
         TripEntity tripEntity = new TripEntity();
@@ -62,8 +34,7 @@ public class TripService {
         return tripRepository.save(tripEntity);
     }
 
-
-    public UUID saveStopUserInfo(UIDto UIDto) {
+    public TripDto saveStopUserInfo(UIDto UIDto) {
         UUID scooterId = UIDto.getScooterId();
         TripEntity tripEntity = tripRepository.findByScooterIdAndStatus(scooterId, TripStatus.ON_RIDE);
         System.out.println(tripEntity);
@@ -73,8 +44,7 @@ public class TripService {
         tripEntity.setStatus(TripStatus.FREE);
         tripEntity.setDistance(geoServise.calculateDistace(UIDto.getScooterId()));
         tripRepository.save(tripEntity);
-
-        sendTripToPayment(tripEntity);
-        return tripEntity.getTripId();
+        TripDto tripDto = conversionService.convert(tripEntity, TripDto.class);
+        return tripDto;
     }
 }

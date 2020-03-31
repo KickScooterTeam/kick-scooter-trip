@@ -1,9 +1,9 @@
 package com.softserve.kickscootertrip.controller;
 
-import com.softserve.kickscootertrip.model.Geo;
+import com.softserve.kickscootertrip.model.GeoRedis;
 //import com.softserve.kickscootertrip.repository.GeoRepository;
 //import com.softserve.kickscootertrip.service.GeoServise;
-import com.softserve.kickscootertrip.repository.GeoRepository;
+import com.softserve.kickscootertrip.repository.GeoRedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Point;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ import java.util.UUID;
 public class TestingController {
 
 //    private final GeoServise geoServise;
-    private final GeoRepository geoRepository;
+    private final GeoRedisRepository geoRedisRepository;
 
 
 
@@ -28,7 +28,7 @@ public class TestingController {
 //    }
 
     @GetMapping("/{p1}/{p2}/{p3}/{p4}")
-    public Iterable<Geo>  add(/*@PathVariable double p1,
+    public Iterable<GeoRedis>  add(/*@PathVariable double p1,
                               @PathVariable double p2,
                               @PathVariable double p3,
                               @PathVariable double p4*/){
@@ -38,26 +38,23 @@ public class TestingController {
         Point point1= new Point(2,3);
         Point point2= new Point(4,5);
 
-        Geo geo1 = new Geo();
+        GeoRedis geo1 = new GeoRedis();
         geo1.setScooterId(u1);
    //   geo1.setPoint(point1);
     //    geo1.setId(3);
-        geoRepository.save(geo1);
-        Geo geo2 = new Geo();
+        geoRedisRepository.save(geo1);
+        GeoRedis geo2 = new GeoRedis();
         geo2.setScooterId(u2);
 //        geo2.setId(5);
      //   geo2.setPoint(point2);
-         geoRepository.save(geo2);
+         geoRedisRepository.save(geo2);
 
-        return geoRepository.findAll();
+        return geoRedisRepository.findAll();
     }
 
-    @GetMapping("/add")
-    public Iterable<Geo> af(){
-        Point point= new Point(1,2);
-   //     Geo geo = new Geo(1, UUID.randomUUID(), point);
-    //    geoRepository.save(geo);
-        return geoRepository.findAll();
+    @GetMapping("/all")
+    public Iterable<GeoRedis> af(){
+        return geoRedisRepository.findAll();
     }
 
 

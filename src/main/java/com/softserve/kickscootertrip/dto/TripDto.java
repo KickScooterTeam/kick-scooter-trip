@@ -8,14 +8,12 @@ import java.util.UUID;
 
 @Data
 public class TripDto {
-    private UUID tripId;
+//    private UUID tripId;
     private UUID userId;
-    private UUID scooterId;
-    private Instant tripStarts;
-    private Instant tripFinishes;
+//    private UUID scooterId;
+//    private Instant tripStarts;
+//    private Instant tripFinishes;
     private Duration tripTime;
-    private double distance;
-    private int tripsNumber;
-    private TripStatus status;
+//    private double distance;
 
 }
