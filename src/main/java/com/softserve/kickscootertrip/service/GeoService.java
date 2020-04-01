@@ -9,6 +9,7 @@ import com.softserve.kickscootertrip.model.TripEntity;
 import com.softserve.kickscootertrip.repository.GeoRepository;
 import com.softserve.kickscootertrip.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "geolocation")
 public class Geo{
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private long id;
         private UUID tripId;
         private double longitude;

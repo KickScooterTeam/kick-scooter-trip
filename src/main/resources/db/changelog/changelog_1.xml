@@ -24,7 +24,7 @@
 
     <changeSet id="create_geolocation_table" author="Oleg">
         <createTable tableName="geolocation">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="trip_id" type="UUID"/>
