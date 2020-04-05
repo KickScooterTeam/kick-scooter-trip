@@ -9,10 +9,10 @@ import java.util.UUID;
 @FeignClient(name = "vehicle-service")
 public interface VehicleClient {
 
-    @PutMapping(path = "/scooters/status/acquire/{scooterId}")
+    @PutMapping(path = "/scooters/status/{scooterId}/acquire")
     String acquireScooter(@PathVariable UUID scooterId);
 
-    @PutMapping(path = "/scooters/status/free/{scooterId}")
+    @PutMapping(path = "/scooters/status/{scooterId}/free")
     String freeScooter(@PathVariable UUID scooterId);
 
 }

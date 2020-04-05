@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/trips")
 @RequiredArgsConstructor
 @Slf4j
 public class TripController {
@@ -26,7 +26,7 @@ public class TripController {
     private final VehicleClient vehicleClient;
 
 
-    @PostMapping("/trip/start")
+    @PostMapping("/start")
     public ResponseEntity<UUID> setStartUserInfo(@RequestBody UIDto uiDto) {
         if (!paymentClient.isUserCanPay(uiDto.getUserId())) {
             return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
@@ -35,7 +35,7 @@ public class TripController {
         return ResponseEntity.ok(tripService.saveStartUserInfo(uiDto).getTripId());
     }
 
-    @PostMapping("/trip/finish")
+    @PostMapping("/finish")
     public ResponseEntity<UUID> setFinishUserInfo(@RequestBody UIDto uiDto) {
         vehicleClient.freeScooter(uiDto.getScooterId());
         TripDto tripDto = tripService.saveStopUserInfo(uiDto);
