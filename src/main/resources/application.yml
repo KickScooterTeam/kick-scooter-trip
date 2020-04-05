@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: trip-service
+
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
@@ -19,5 +22,7 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
 
-payment-url: ${PAYMENT_URL}
-vehicle-url: ${VEHICLE_URL}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_SERVER}/eureka/

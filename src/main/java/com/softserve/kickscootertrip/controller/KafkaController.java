@@ -14,7 +14,7 @@ public class KafkaController {
     private final GeoService geoService;
     private static final String IN_USE = "in-use-scooter-data";
 
-    @KafkaListener(topics = IN_USE, groupId = "trip")
+    @KafkaListener(topics = IN_USE)
     public void consumer(ScooterStatusDto scooterStatusDto) {
         log.info(scooterStatusDto + " received");
         geoService.save(scooterStatusDto);

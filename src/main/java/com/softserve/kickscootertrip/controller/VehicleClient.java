@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.UUID;
 
-@FeignClient(name = "vehicle-client", url = "${vehicle-url}")
+@FeignClient(name = "vehicle-service")
 public interface VehicleClient {
 
     @PutMapping(path = "/scooters/status/acquire/{scooterId}")
