@@ -6,6 +6,7 @@ import com.softserve.kickscootertrip.dto.UIDto;
 import com.softserve.kickscootertrip.service.TripService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,22 +26,24 @@ public class TripController {
     private final PaymentClient paymentClient;
     private final VehicleClient vehicleClient;
 
+    @Value("${service-token}")
+    private String bearerToken;
 
     @PostMapping("/start")
     public ResponseEntity<UUID> setStartUserInfo(@RequestBody UIDto uiDto) {
-        if (!paymentClient.isUserCanPay(uiDto.getUserId())) {
+        if (!paymentClient.isUserCanPay(bearerToken, uiDto.getUserId())) {
             return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
         }
-        vehicleClient.acquireScooter(uiDto.getScooterId());
+        vehicleClient.acquireScooter(bearerToken, uiDto.getScooterId());
         return ResponseEntity.ok(tripService.saveStartUserInfo(uiDto).getTripId());
     }
 
     @PostMapping("/finish")
     public ResponseEntity<UUID> setFinishUserInfo(@RequestBody UIDto uiDto) {
-        vehicleClient.freeScooter(uiDto.getScooterId());
+        vehicleClient.freeScooter(bearerToken, uiDto.getScooterId());
         TripDto tripDto = tripService.saveStopUserInfo(uiDto);
         log.info("TripDto for sending " + tripDto);
-        paymentClient.createInvoice(tripDto);
+        paymentClient.createInvoice(bearerToken, tripDto);
         return ResponseEntity.ok(tripDto.getUserId());
     }
 

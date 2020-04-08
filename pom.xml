@@ -40,7 +40,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.softserve</groupId>
+            <artifactId>identity-starter</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>

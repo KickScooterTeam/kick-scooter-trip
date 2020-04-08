@@ -2,7 +2,12 @@ package com.softserve.kickscootertrip.controller;
 
 import com.softserve.kickscootertrip.dto.TripDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.UUID;
 
@@ -10,10 +15,10 @@ import java.util.UUID;
 public interface PaymentClient {
 
     @PostMapping(path = "/payments/{userId}/user-solvency")
-    Boolean isUserCanPay(@PathVariable UUID userId);
+    Boolean isUserCanPay(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken, @PathVariable UUID userId);
 
     @PostMapping(path = "/invoices")
-    Object createInvoice(@RequestBody TripDto tripDto);
+    Object createInvoice(@RequestHeader(HttpHeaders.AUTHORIZATION) String bearerToken, @RequestBody TripDto tripDto);
 
 }
 
