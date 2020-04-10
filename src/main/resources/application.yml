@@ -8,6 +8,10 @@ spring:
     password: ${DATABASE_PASSWORD}
 
   kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: payment-info:com.softserve.kickscootertrip.dto.TripDto
     consumer:
       auto-offset-reset: earliest
       bootstrap-servers: ${BOOTSTRAP_SERVERS}

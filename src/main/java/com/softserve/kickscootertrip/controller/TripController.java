@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class TripController {
     private final TripService tripService;
     private final PaymentClient paymentClient;
     private final VehicleClient vehicleClient;
+    private final KafkaTemplate<String, TripDto> kafkaTemplate;
 
     @Value("${service-token}")
     private String bearerToken;
@@ -43,7 +45,10 @@ public class TripController {
         vehicleClient.freeScooter(bearerToken, uiDto.getScooterId());
         TripDto tripDto = tripService.saveStopUserInfo(uiDto);
         log.info("TripDto for sending " + tripDto);
-        paymentClient.createInvoice(bearerToken, tripDto);
+
+        kafkaTemplate.send("payment-info", tripDto);
+        log.info("send the payment info");
+
         return ResponseEntity.ok(tripDto.getUserId());
     }
 
