@@ -33,6 +33,10 @@ public class TripController {
 
     @PostMapping("/start")
     public ResponseEntity<UUID> setStartUserInfo(@RequestBody UIDto uiDto) {
+        if(tripService.isScooterInUse(uiDto.getScooterId())){
+            log.info("Scooter "+uiDto+" is in use now");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         if (!paymentClient.isUserCanPay(bearerToken, uiDto.getUserId())) {
             return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).build();
         }

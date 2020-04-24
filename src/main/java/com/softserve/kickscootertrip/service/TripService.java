@@ -61,4 +61,8 @@ public class TripService {
         }
         return tripsDto;
     }
+
+    public boolean isScooterInUse(UUID scooterId){
+        return null != tripRepository.findByScooterIdAndStatus(scooterId, TripStatus.ON_RIDE);
+    }
 }
