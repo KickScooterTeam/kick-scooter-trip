@@ -3,6 +3,7 @@ package com.softserve.kickscootertrip.controller;
 
 import com.softserve.kickscootertrip.dto.TripDto;
 import com.softserve.kickscootertrip.dto.UIDto;
+import com.softserve.kickscootertrip.model.TripEntity;
 import com.softserve.kickscootertrip.service.TripService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,16 +11,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/trips")
 @RequiredArgsConstructor
+@CrossOrigin(origins ="*")
 @Slf4j
 public class TripController {
 
@@ -50,6 +50,11 @@ public class TripController {
         log.info("send the payment info");
 
         return ResponseEntity.ok(tripDto.getUserId());
+    }
+
+    @GetMapping("{userId}/history")
+    public ResponseEntity<List<TripDto>> findUserTrips(@PathVariable UUID userId){
+        return ResponseEntity.ok(tripService.getUserTripsDetails(userId));
     }
 
 }

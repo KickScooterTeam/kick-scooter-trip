@@ -12,7 +12,9 @@ public class TripToTripDto implements Converter<TripEntity, TripDto> {
     public TripDto convert(TripEntity tripEntity) {
         TripDto tripDto = new TripDto();
         tripDto.setUserId(tripEntity.getUserId());
-        tripDto.setDuration(tripEntity.getTripTime());
+        tripDto.setTripId(tripEntity.getTripId());
+        tripDto.setTripTime(tripEntity.getTripTime());
+        tripDto.setDistance(tripEntity.getDistance());
         return tripDto;
     }
 }

@@ -8,6 +8,8 @@ import java.util.UUID;
 @Data
 public class TripDto {
     private UUID userId;
-    private Duration duration;
+    private UUID tripId;
+    private Duration tripTime;
+    private double distance;
 
 }

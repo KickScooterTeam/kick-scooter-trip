@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -47,5 +49,16 @@ public class TripService {
 
         TripDto tripDto = conversionService.convert(tripEntity, TripDto.class);
         return tripDto;
+    }
+
+    public List<TripDto> getUserTripsDetails(UUID userId) {
+        List<TripEntity> trips;
+        trips = tripRepository.findByUserId(userId);
+        List<TripDto> tripsDto = new ArrayList<>();
+        for (TripEntity trip : trips) {
+            TripDto tripDto = conversionService.convert(trip, TripDto.class);
+            tripsDto.add(tripDto);
+        }
+        return tripsDto;
     }
 }
