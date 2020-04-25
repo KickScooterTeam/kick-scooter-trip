@@ -19,7 +19,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/trips")
 @RequiredArgsConstructor
-@CrossOrigin(origins ="*")
 @Slf4j
 public class TripController {
 
