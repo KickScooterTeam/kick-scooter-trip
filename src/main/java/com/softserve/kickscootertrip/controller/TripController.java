@@ -2,9 +2,11 @@ package com.softserve.kickscootertrip.controller;
 
 
 import com.softserve.kickscootertrip.dto.TripDto;
+import com.softserve.kickscootertrip.dto.TripStatus;
 import com.softserve.kickscootertrip.dto.UIDto;
 import com.softserve.kickscootertrip.dto.UiPointDto;
 import com.softserve.kickscootertrip.model.TripEntity;
+import com.softserve.kickscootertrip.repository.TripRepository;
 import com.softserve.kickscootertrip.service.TripService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +27,7 @@ import java.util.UUID;
 public class TripController {
 
     private final TripService tripService;
+    private final TripRepository tripRepository;
     private final PaymentClient paymentClient;
     private final VehicleClient vehicleClient;
     private final KafkaTemplate<String, TripDto> kafkaTemplate;
@@ -63,8 +67,9 @@ public class TripController {
 
     @GetMapping("/show-position")
     public ResponseEntity<UiPointDto> getPositionOfScooterForUser(@RequestParam UUID userId){
-        return ResponseEntity.ok(vehicleClient.getScooterStatusDetails(bearerToken, userId));
+        Optional<TripEntity> trip = tripRepository.findByUserIdAndStatus(userId, TripStatus.ON_RIDE);
+        return trip.map(tripEntity -> ResponseEntity.ok(vehicleClient.getScooterStatusDetails(bearerToken, tripEntity.getScooterId())))
+                .orElseGet(() -> ResponseEntity.ok(new UiPointDto()));
     }
-
 
 }
