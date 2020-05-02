@@ -3,6 +3,7 @@ package com.softserve.kickscootertrip.controller;
 
 import com.softserve.kickscootertrip.dto.TripDto;
 import com.softserve.kickscootertrip.dto.UIDto;
+import com.softserve.kickscootertrip.dto.UiPointDto;
 import com.softserve.kickscootertrip.model.TripEntity;
 import com.softserve.kickscootertrip.service.TripService;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,11 @@ public class TripController {
     public ResponseEntity<List<TripDto>> findUserTrips(@PathVariable UUID userId){
         return ResponseEntity.ok(tripService.getUserTripsDetails(userId));
     }
+
+    @GetMapping("/show-position")
+    public ResponseEntity<UiPointDto> getPositionOfScooterForUser(@RequestParam UUID userId){
+        return ResponseEntity.ok(vehicleClient.getScooterStatusDetails(bearerToken, userId));
+    }
+
 
 }
